@@ -16,6 +16,7 @@ from pretrain.lxmert_data import InputExample, LXMERTDataset, LXMERTTorchDataset
 from lxrt.entry import set_visual_config
 from lxrt.tokenization import BertTokenizer
 from lxrt.modeling import LXRTPretraining
+from lxrt.optimization import BertAdam
 
 DataTuple = collections.namedtuple("DataTuple", 'dataset torchdset loader evaluator')
 
@@ -309,8 +310,6 @@ class LXMERT:
     def train(self, train_tuple: DataTuple, eval_tuple: DataTuple):
         train_ld = train_tuple.loader
 
-        # Optimizer
-        from lxrt.optimization import BertAdam
         batch_per_epoch = len(train_ld)
         t_total = int(batch_per_epoch * args.epochs)
         warmup_ratio = 0.05
